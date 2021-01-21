@@ -1,4 +1,4 @@
-package kg.nurik.cameraimage.base
+package kg.nurik.cameraimage.common
 
 import android.Manifest
 import android.app.Activity
@@ -41,7 +41,9 @@ abstract class BaseUserPhotoActivity : AppCompatActivity() {
                 intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             } else intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-            startActivityForResult(intent, RESULT_CAMERA)
+            startActivityForResult(intent,
+                RESULT_CAMERA
+            )
         }
     }
 
@@ -53,7 +55,9 @@ abstract class BaseUserPhotoActivity : AppCompatActivity() {
         )
 
         intent.type = "image/*"
-        startActivityForResult(intent, RESULT_GALLERY)
+        startActivityForResult(intent,
+            RESULT_GALLERY
+        )
 
     }
 
@@ -104,7 +108,7 @@ abstract class BaseUserPhotoActivity : AppCompatActivity() {
     }
 
 
-    fun getNormalizedUri(uri: Uri?): Uri? {
+    private fun getNormalizedUri(uri: Uri?): Uri? {
         return if (uri != null && uri.toString().contains("content:"))
             Uri.fromFile(getPath(applicationContext, uri, MediaStore.Images.Media.DATA))
         else
@@ -121,7 +125,7 @@ abstract class BaseUserPhotoActivity : AppCompatActivity() {
         return File(path)
     }
 
-    fun getImagePathFromInputStreamUri(context: Context, uri: Uri): String? {
+    private fun getImagePathFromInputStreamUri(context: Context, uri: Uri): String? {
         var inputStream: InputStream? = null
         var filePath: String? = null
 
