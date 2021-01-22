@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import permissions.dispatcher.NeedsPermission
@@ -24,6 +25,8 @@ import java.util.*
 abstract class BaseUserPhotoActivity : AppCompatActivity() {
 
     abstract fun showPhoto(file: File)
+
+//    val takePhoto = registerForActivityResult()
 
     @NeedsPermission(Manifest.permission.CAMERA)
     fun shootPhoto() {
@@ -41,7 +44,8 @@ abstract class BaseUserPhotoActivity : AppCompatActivity() {
                 intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             } else intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-            startActivityForResult(intent,
+            startActivityForResult(
+                intent,
                 RESULT_CAMERA
             )
         }
@@ -55,7 +59,8 @@ abstract class BaseUserPhotoActivity : AppCompatActivity() {
         )
 
         intent.type = "image/*"
-        startActivityForResult(intent,
+        startActivityForResult(
+            intent,
             RESULT_GALLERY
         )
 
